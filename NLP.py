@@ -13,20 +13,13 @@ dataset=pd.read_csv('Restaurant_Reviews.tsv',delimiter='\t',quoting=3) #3 is cod
 
 corpus=[]
 for i in range(0,len(dataset)):
-    #cleaning the Texts Step2
     review=re.sub('[^a-zA-Z]',' ',dataset['Review'][i])
-    #scaling lower case step 3
     review=review.lower()
-    # remove non significent word(the is an etc like stopwords)step 4
-    #nltk.data.path.append('/media/paritosh/Software/NLTK_Data')
     review=review.split() 
-    ps=PorterStemmer() #Step 5 PorterStemmer like cleaning similer type of words loved to love
+    ps=PorterStemmer() 
     review=[ps.stem(word) for word in review if not word in nltk.corpus.stopwords.words('english')]
-    #step 6
     review=' '.join(review)
     corpus.append(review)
-
-# create bag of word model spars matrix
 
 from sklearn.feature_extraction.text import CountVectorizer
 cv=CountVectorizer(max_features=1500) #most relevent top 1500 
